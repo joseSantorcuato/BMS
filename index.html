@@ -98,6 +98,7 @@ var amplitud = 0;
 
           change: function(amp) {
               console.log("amp : " + amp);
+              amplitud = amp;
 
           }
 
@@ -174,13 +175,28 @@ $("#pitch").knob({
 
     release: function(pitch) {
         console.log("pitch : " + pitch);
-        altura = pitch*200;
-        var osc = new Tone.Synth().toMaster();
+        altura = pitch*100;
+
+        var num = amplitud;
+        console.log(num.map(0, 100, -24, 0)); // 0
+        var amplificador = num.map(0, 100, -12, 12);
+
+
+        var osc = new Tone.Synth();
+        var volu = new Tone.Volume(amplificador);
+
+        osc.chain(volu, Tone.Master);
+      //  osc.chain(osc, panVol, Tone.Master);
         osc.triggerAttackRelease(altura, "8n");
+        console.log("amplitud: " + amplitud);
+        console.log("numero: " + altura);
 
 
 
-        console.log("altura: " + altura);
+
+
+
+
 
 
 
@@ -190,7 +206,13 @@ $("#pitch").knob({
 
     }
 
+
 });
+
+Number.prototype.map = function (in_min, in_max, out_min, out_max) {
+  return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
 
 
 
