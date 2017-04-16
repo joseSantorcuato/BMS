@@ -86,6 +86,7 @@
 var altura = 0;
 var amplitud = 0;
 var filtro = 0;
+var forma = 0;
 
 
       $("#amp").knob({
@@ -116,6 +117,7 @@ var filtro = 0;
 
         change: function(wave) {
             console.log("wave : " + wave);
+            forma = wave;
         }
 
   });
@@ -177,20 +179,73 @@ $("#pitch").knob({
 
     release: function(pitch) {
         console.log("pitch : " + pitch);
-        altura = pitch*100;
+        altura = pitch*100; // pitch
 
         var num = amplitud;
-        console.log(num.map(0, 100, -24, 0)); // 0
+        console.log(num.map(0, 100, -24, 0)); // amplitud
         var amplificador = num.map(0, 100, -12, 12);
 
         var numa = filtro;
-        console.log(numa.map(0, 100, 0, 20000)); // 0
+        console.log(numa.map(0, 100, 0, 20000)); // filtro
         var cutoff = numa.map(0, 100, 0, 20000);
 
+        var numb = forma;
+        console.log(numb.map(0, 100, 0, 10)); // forma de onda
+        var sforma = numb.map(0, 100, 0, 8);
 
-        var osc = new Tone.Synth();
 
-        
+        var seleccion =  Math.floor(sforma);
+
+        console.log("forma onda : " + seleccion);
+
+        switch(seleccion) {
+            case 1:
+              var osc = new Tone.AMSynth();
+
+            break;
+            case 2:
+              var osc = new Tone.DuoSynth();
+
+            break;
+            case 3:
+              var osc = new Tone.MembraneSynth();
+
+            break;
+
+            case 4:
+              var osc = new Tone.MetalSynth();
+
+            break;
+            case 5:
+              var osc = new Tone.MonoSynth();
+
+            break;
+
+
+            case 6:
+              var osc = new Tone.NoiseSynth();
+
+            break;
+
+            break;
+            case 7:
+              var osc = new Tone.Synth();
+
+            break;
+
+            default:
+            var osc = new Tone.Synth();
+
+}
+
+
+
+
+
+
+        //var osc = new Tone.Synth();
+
+
         var volu = new Tone.Volume(amplificador);
         var filter = new Tone.Filter(cutoff, "highpass");
 
