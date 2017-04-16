@@ -85,6 +85,7 @@
 
 var altura = 0;
 var amplitud = 0;
+var filtro = 0;
 
 
       $("#amp").knob({
@@ -130,6 +131,7 @@ var amplitud = 0;
 
       change: function(filter) {
           console.log("filter : " + filter);
+          filtro = filter;
       }
 
 });
@@ -181,11 +183,18 @@ $("#pitch").knob({
         console.log(num.map(0, 100, -24, 0)); // 0
         var amplificador = num.map(0, 100, -12, 12);
 
+        var numa = filtro;
+        console.log(numa.map(0, 100, 0, 20000)); // 0
+        var cutoff = numa.map(0, 100, 0, 20000);
+
 
         var osc = new Tone.Synth();
-        var volu = new Tone.Volume(amplificador);
 
-        osc.chain(volu, Tone.Master);
+        
+        var volu = new Tone.Volume(amplificador);
+        var filter = new Tone.Filter(cutoff, "highpass");
+
+        osc.chain(volu,filter, Tone.Master);
       //  osc.chain(osc, panVol, Tone.Master);
         osc.triggerAttackRelease(altura, "8n");
         console.log("amplitud: " + amplitud);
