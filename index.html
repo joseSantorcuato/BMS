@@ -8,6 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon/favicon-32x32.png">
+    <script src="tone/build/Tone.js"></script>
+
 
     <title>BMS</title>
 
@@ -22,7 +24,10 @@
     <!-- Custom styles for this template -->
     <link href="css/estilo.css" rel="stylesheet">
     <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+
+
     <script src="knob/dist/jquery.knob.min.js"></script>
+
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -77,6 +82,11 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
     <script type="text/javascript">
+
+var altura = 0;
+var amplitud = 0;
+
+
       $("#amp").knob({
 
           'fgColor': 'white',
@@ -88,6 +98,7 @@
 
           change: function(amp) {
               console.log("amp : " + amp);
+
           }
 
     });
@@ -161,11 +172,27 @@ $("#pitch").knob({
 
 
 
-    change: function(pitch) {
+    release: function(pitch) {
         console.log("pitch : " + pitch);
+        altura = pitch*200;
+        var osc = new Tone.Synth().toMaster();
+        osc.triggerAttackRelease(altura, "8n");
+
+
+
+        console.log("altura: " + altura);
+
+
+
+
+
+
+
     }
 
 });
+
+
 
     </script>
 
