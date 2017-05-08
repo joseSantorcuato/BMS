@@ -11,6 +11,7 @@
     <script src="tone/build/Tone.js"></script>
 
 
+
     <title>BMS</title>
 
       <!-- Bootstrap core CSS -->
@@ -61,16 +62,16 @@
       <p></p>
 
       <div class="row">
-        <div class="col-xs-3 col-sm-3">Amp</div>
-        <div class="col-xs-3 col-sm-3">Waveform</div>
-        <div class="col-xs-3 col-sm-3">Filter</div>
-        <div class="col-xs-3 col-sm-3">Pitch</div>
+        <div class="col-xs-4 col-sm-4">Amp</div>
+
+        <div class="col-xs-4 col-sm-4">Filter</div>
+        <div class="col-xs-4 col-sm-4">Pitch</div>
 
 
-        <div class="col-xs-3 col-sm-3"><input class="knob" id="amp" data-displayInput=false>
+        <div class="col-xs-4 col-sm-4"><input class="knob" id="amp" data-displayInput=false>
 </div>
-        <div class="col-xs-3 col-sm-3"><input class="knob" id="wave" data-displayInput=false></div>
-        <div class="col-xs-3 col-sm-3"><input class="knob" id="filter" data-displayInput=false></div>
+
+        <div class="col-xs-4 col-sm-4"><input class="knob" id="filter" data-displayInput=false></div>
 
 
 
@@ -79,7 +80,7 @@
 
 
 
-        <div class="col-xs-3 col-sm-3"><input class="knob" id="pitch" data-displayInput=false></div>
+        <div class="col-xs-4 col-sm-4"><input class="knob" id="pitch" data-displayInput=false></div>
 
       </div>
 
@@ -117,21 +118,7 @@ var forma = 0;
 
     });
 
-    $("#wave").knob({
 
-        'fgColor': 'white',
-        'bgColor': '#000',
-        'width': '100px',
-        'height': '100px',
-
-
-
-        change: function(wave) {
-            console.log("wave : " + wave);
-            forma = wave;
-        }
-
-  });
 
   $("#filter").knob({
 
@@ -209,46 +196,8 @@ $("#pitch").knob({
 
         console.log("forma onda : " + seleccion);
 
-        switch(seleccion) {
-            case 1:
-              var osc = new Tone.AMSynth();
 
-            break;
-            case 2:
-              var osc = new Tone.DuoSynth();
-
-            break;
-            case 3:
               var osc = new Tone.MembraneSynth();
-
-            break;
-
-            case 4:
-              var osc = new Tone.MetalSynth();
-
-            break;
-            case 5:
-              var osc = new Tone.MonoSynth();
-
-            break;
-
-
-            case 6:
-              var osc = new Tone.NoiseSynth();
-
-            break;
-
-            break;
-            case 7:
-              var osc = new Tone.Synth();
-
-            break;
-
-            default:
-            var osc = new Tone.Synth();
-
-}
-
 
 
 
@@ -261,6 +210,8 @@ $("#pitch").knob({
         var filter = new Tone.Filter(cutoff, "highpass");
 
         osc.chain(volu,filter, Tone.Master);
+
+
       //  osc.chain(osc, panVol, Tone.Master);
         osc.triggerAttackRelease(altura, "8n");
         console.log("amplitud: " + amplitud);
